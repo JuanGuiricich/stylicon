@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative "../lib/stylicon"
+require_relative "../lib/stylicon/generator"
+
+config = ARGV[0] || "icons.yml"
+output = ARGV[1] || "stylicon.css"
+
+Stylicon::Generator.new(config, output).generate

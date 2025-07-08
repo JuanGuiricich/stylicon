@@ -1,0 +1,6 @@
+edit:
+  path: spec/fixtures/edit.svg
+  width: 24
+  height: 24
+  fill: "#E75275"
+  class: ".icon-edit"
