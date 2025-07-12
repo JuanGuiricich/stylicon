@@ -15,9 +15,6 @@ module Stylicon
 
       config.each do |name, opts|
         path = opts["path"]
-        fill = opts["fill"]
-        width = opts["width"]
-        height = opts["height"]
         classes = Array(opts["class"] || ".icon-#{name}")
         background = opts["background"]
 

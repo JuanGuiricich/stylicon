@@ -3,6 +3,23 @@
 
 require_relative "../lib/stylicon"
 require_relative "../lib/stylicon/generator"
+require_relative "../lib/stylicon/transformer"
+
+if ARGV[0] == "--transform-svg"
+  input = ARGV[1]
+  out = ARGV[ARGV.index("--out") + 1]
+  style = ARGV.include?("--style") ? ARGV[ARGV.index("--style") + 1] : nil
+  classes = ARGV.include?("--classes") ? ARGV[ARGV.index("--classes") + 1] : nil
+
+  Stylicon::Transformer.new(
+    input_svg: input,
+    output_svg: out,
+    style: style,
+    classes: classes
+  ).transform
+
+  exit 0
+end
 
 config = ARGV[0] || "icons.yml"
 output = ARGV[1] || "stylicon.css"
