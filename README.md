@@ -7,7 +7,7 @@
 Traditional icon approaches hurt performance:
 
 ```html
-<!-- ❌ SLOW: Inline SVG (repeated 50 times = 50x the code) -->
+<!--  SLOW: Inline SVG (repeated 50 times = 50x the code) -->
 <svg class="icon" viewBox="0 0 24 24">
   <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z"/>
 </svg>
@@ -16,33 +16,9 @@ Traditional icon approaches hurt performance:
 Stylicon generates **cacheable CSS classes**:
 
 ```html
-<!-- ✅ FAST: Single CSS class -->
+<!--  FAST: Single CSS class -->
 <i class="icon-edit"></i>
 ```
-
-### Performance Improvements
-
-| Metric | Inline SVG | Stylicon CSS Classes | Improvement |
-|--------|------------|---------------------|-------------|
-| **HTML Size** | ~200 bytes/icon | ~20 bytes/icon | **90% smaller** |
-| **Caching** | ❌ None | ✅ Full browser cache | **Massive** |
-| **Repeated Icons** | Linear growth | Zero overhead | **100% efficient** |
-| **HTTP Requests** | 1 per unique icon | 1 total | **Scales infinitely** |
-| **DOM Parsing** | Heavy XML parsing | Lightweight CSS | **10x faster** |
-
-### Real-World Impact
-
-**Before Stylicon:**
-- 20 icons × 50 uses = 1,000 SVG nodes in DOM
-- 200KB of repeated SVG code
-- No caching between pages
-- Slow HTML parsing
-
-**After Stylicon:**
-- 20 icons × 50 uses = 50 lightweight elements  
-- 5KB cached CSS file
-- Instant loading on subsequent pages
-- Lightning-fast parsing
 
 ## Features
 
@@ -126,7 +102,7 @@ stylicon --input-folder source/ --out destination/ [options]
 ```
 
 #### Transform using glob patterns:
-```bash
+-```bash
 stylicon --transform-svg "icons/*.svg" --out transformed/ [options]
 ```
 
@@ -279,10 +255,10 @@ stylicon --transform-svg "icons/*.svg" --out icons-lg/ --width 48 --height 48 --
 
 ### 1. Use CSS Generation for Production
 ```bash
-# ✅ BEST: Single cached CSS file
+# BEST: Single cached CSS file
 stylicon icons.yml production-icons.css
 
-# ❌ AVOID: Individual icon transformations for web use
+# AVOID: Individual icon transformations for web use
 ```
 
 ### 2. Optimize for HTTP/2
