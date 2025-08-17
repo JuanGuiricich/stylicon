@@ -6,6 +6,7 @@ require "optparse"
 require_relative "../lib/stylicon"
 require_relative "../lib/stylicon/generator"
 require_relative "../lib/stylicon/transformer"
+require_relative "../lib/stylicon/batch_transformer"
 
 options = {}
 OptionParser.new do |opts|
@@ -19,9 +20,26 @@ OptionParser.new do |opts|
   opts.on("--stroke COLOR", "Stroke Color") { |value| options[:stroke] = value }
   opts.on("--width SIZE", "Width Size") { |value| options[:width] = value }
   opts.on("--height SIZE", "Height Size") { |value| options[:height] = value }
+  opts.on("--input-folder FOLDER", "Input Folder for batch processing") { |value| options[:input_folder] = value }
+  opts.on("--input-css-file FILE", "CSS file to extract css classes from") { |value| options[:input_css] = value }
 end.parse!
 
-if options[:input]
+if options[:input_folder] || (options[:input] && options[:input].include?("*"))
+  input_pattern = options[:input_folder] ? nil : options[:input]
+
+  Stylicon::BatchTransformer.new(
+    output_folder: options[:output],
+    input_folder: options[:input_folder],
+    input_pattern: input_pattern,
+    style: options[:style],
+    classes: options[:classes],
+    fill: options[:fill],
+    stroke: options[:stroke],
+    width: options[:width],
+    height: options[:height]
+  ).transform
+  exit 0
+elsif options[:input]
   Stylicon::Transformer.new(
     input_svg: options[:input],
     output_svg: options[:output],
@@ -32,7 +50,7 @@ if options[:input]
     width: options[:width],
     height: options[:height]
   ).transform
-  exit
+  exit 0
 end
 
 config = ARGV[0] || "icons.yml"
