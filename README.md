@@ -60,14 +60,49 @@ stylicon [config.yml] [output.css]
 stylicon icons.yml stylicon.css
 ```
 
+Create an `icons.yml` configuration file:
+```yaml
+# icons.yml - Configuration for CSS generation
+edit:
+  path: icons/edit.svg
+  class: ".icon-edit"
+  background: "#333"
+
+user:
+  path: icons/user.svg
+  class: [".icon-user", ".user-icon"] 
+  background: "currentColor"
+
+home:
+  path: icons/home.svg
+  class: ".icon-home"
+  # background optional - will use mask mode
+
+delete:
+  path: icons/delete.svg
+  class: ".icon-delete"
+  background: "#e74c3c"
+```
+
 This creates a **single cacheable CSS file** with all your icons as base64-encoded background images:
 
 ```css
-.icon-user {
-  background-image: url('data:image/svg+xml;base64,PHN2Zy...');
-  width: 20px;
-  height: 20px;
+.icon-edit {
+  -webkit-mask-image: url("data:image/svg+xml;base64,PHN2Zy...");
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  -webkit-mask-position: center;
   display: inline-block;
+  background-color: #333;
+}
+
+.icon-user, .user-icon {
+  -webkit-mask-image: url("data:image/svg+xml;base64,PHN2Zy...");
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  -webkit-mask-position: center;
+  display: inline-block;
+  background-color: currentColor;
 }
 ```
 
@@ -117,30 +152,6 @@ stylicon --transform-svg "assets/icons/user-*.svg" --out output/ --stroke red --
 # Transform all SVGs recursively
 stylicon --transform-svg "**/*.svg" --out flattened/ --height 24 --width 24
 ```
-
-## Performance Benchmarks
-
-### Icon Loading Performance
-
-**Test: 100 icons used 10 times each (1,000 total icon instances)**
-
-| Method | HTML Size | HTTP Requests | Cache Efficiency | Load Time |
-|--------|-----------|---------------|------------------|-----------|
-| Inline SVG | 2.3MB | 1 | 0% | 850ms |
-| Individual Icon Files | 45KB | 100 | 80% | 420ms |
-| **Stylicon CSS** | **67KB** | **1** | **100%** | **95ms** |
-
-### Real Application Examples
-
-**E-commerce Site (500 product icons):**
-- Before: 15MB HTML, 3.2s load time
-- After: 890KB HTML + 45KB CSS, 0.8s load time
-- **75% faster loading**
-
-**Admin Dashboard (200 UI icons):**
-- Before: 8MB repeated SVG code
-- After: 380KB total, cached across all pages  
-- **95% reduction in icon-related bandwidth**
 
 ## Command Line Options
 
