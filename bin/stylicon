@@ -21,7 +21,6 @@ OptionParser.new do |opts|
   opts.on("--width SIZE", "Width Size") { |value| options[:width] = value }
   opts.on("--height SIZE", "Height Size") { |value| options[:height] = value }
   opts.on("--input-folder FOLDER", "Input Folder for batch processing") { |value| options[:input_folder] = value }
-  opts.on("--input-css-file FILE", "CSS file to extract css classes from") { |value| options[:input_css] = value }
 end.parse!
 
 if options[:input_folder] || (options[:input] && options[:input].include?("*"))
